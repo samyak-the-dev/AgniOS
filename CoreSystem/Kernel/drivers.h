@@ -3,8 +3,15 @@
 
 #include <stdint.h>
 
-// USB tablet driver functions
+typedef struct {
+    int x,y;
+    uint8_t buttons;
+} mouse_state;
+
+extern mouse_state mouse;
+
 void usb_init();
-void usb_read_mouse(int* x, int* y, uint8_t* buttons);
+void usb_read_mouse(int* x,int* y,uint8_t* buttons);
+void update_mouse();
 
 #endif

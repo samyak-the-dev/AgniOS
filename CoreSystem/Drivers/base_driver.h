@@ -3,8 +3,7 @@
 
 #include <stdint.h>
 
-// Framebuffer / graphics
 void framebuffer_init();
-void draw_pixel(int x, int y, uint32_t color);
+void draw_pixel(int x, int y, uint8_t color);
 
 #endif
