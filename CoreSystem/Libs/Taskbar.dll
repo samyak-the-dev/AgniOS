@@ -1,0 +1,5 @@
+void init_taskbar() {}
+void draw_taskbar() {
+    draw_rect(0,460,800,20,0x888888); // simple bar at bottom
+    // draw app buttons
+}

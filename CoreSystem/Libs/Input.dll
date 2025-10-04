@@ -1,0 +1,5 @@
+void init_input() {}
+int read_key() { return 0; }
+int read_mouse_x() { return 0; }
+int read_mouse_y() { return 0; }
+int mouse_click() { return 0; }

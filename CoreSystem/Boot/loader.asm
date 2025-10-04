@@ -7,60 +7,28 @@ start:
     mov ds, ax
     mov ss, ax
     mov sp, 0x7C00
+    sti
 
-    ; Text mode first
-    mov ah, 0x0
-    mov al, 0x03
-    int 0x10
-
-    ; Print boot text
-    mov si, boot_text
-    call print_text_centered
-
-    ; Switch to 320x200 graphics mode
-    mov ah, 0x00
-    mov al, 0x13
-    int 0x10
-
-    ; Initialize spinner
-    xor bx, bx ; spinner index
-
-spinner_loop:
-    call draw_spinner
-    call delay
-    inc bx
-    jmp spinner_loop
-
-; -------------------
-print_text_centered:
-    mov bx, 40
-.next_char:
+    ; --- Boot screen text ---
+    mov si, msg
+.print:
     lodsb
     cmp al, 0
-    je .done
-    mov ah, 0x0F
-    mov cx, bx
-    mov dx, 5
+    je .boot_done
+    mov ah, 0x0E
+    mov bx, 0x07
     int 0x10
-    inc bx
-    jmp .next_char
-.done:
+    jmp .print
+
+.boot_done:
+    call load_kernel
+    jmp 0x100000
+
+load_kernel:
+    ; stub for kernel loading
     ret
 
-boot_text db "Booting into AgniOS",0
-
-; -------------------
-draw_spinner:
-    ; simple 12-dot spinner around (160,100)
-    mov di, 0xA000
-    ; pseudo-code, real graphics spinner can be added
-    ret
-
-delay:
-    mov cx, 0xFFFF
-.delay1:
-    loop .delay1
-    ret
+msg db "  AgniOS  ",0
 
 times 510-($-$$) db 0
 dw 0xAA55
